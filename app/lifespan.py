@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from .models import Base, engine
+from models import Base, engine
 
 
 @asynccontextmanager

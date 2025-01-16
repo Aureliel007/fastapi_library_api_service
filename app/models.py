@@ -7,7 +7,7 @@ from sqlalchemy import (UUID, Boolean, CheckConstraint, Column, DateTime,
 from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
-from .config import DSN
+from config import DSN
 # from extra_types import ModelName
 
 
@@ -34,3 +34,7 @@ class Author(Base):
             "biography": self.biography,
             "date_of_birth": self.date_of_birth
         }
+
+
+ORM_OBJECT = Author
+ORM_CLS = type[Author]

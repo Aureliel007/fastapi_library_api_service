@@ -10,7 +10,7 @@ class ItemId(BaseModel):
 class StatusResponse(BaseModel):
     status: Literal["ok", "deleted"]
 
-class Author(BaseModel):
+class AuthorSchema(BaseModel):
     name: str
     biography: str
     date_of_birth: datetime.date
