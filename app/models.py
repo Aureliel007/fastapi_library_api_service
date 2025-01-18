@@ -37,6 +37,11 @@ book_user = Table(
     Base.metadata,
     Column("book_id", ForeignKey("books.id"), primary_key=True, index=True),
     Column("user_id", ForeignKey("users.id"), primary_key=True, index=True),
+    Column("rent_date", DateTime, nullable=False, default=datetime.datetime.now()),
+    Column(
+        "return_date", DateTime, nullable=True,
+        default=datetime.datetime.now() + datetime.timedelta(days=7)
+    ),
 )
 
 class UserRole(str, Enum):
@@ -58,18 +63,8 @@ class User(Base):
         return {
             "id": self.id,
             "name": self.name,
-            "email": self.email,
-            "books": self.books
+            "email": self.email
         }
-
-# class Token(Base):
-#     __tablename__ = "tokens"
-
-#     access_token: Mapped[str]
-#     token_type: Mapped[str]
-
-# class TokenData(Base):
-#     email: Mapped[str]
 
 class Author(Base):
     __tablename__ = "authors"

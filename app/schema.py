@@ -29,12 +29,41 @@ class BaseUser(BaseModel):
 class CreateUser(BaseUser):
     name: str
 
+class GetUser(BaseModel):
+    id: int
+    name: str
+    email: EmailStr
+    role: str
+
+class GetUserDetails(GetUser):
+    books: list["GetBook"]
+
+class UpdateUser(BaseModel):
+    name: str | None = None
+    email: EmailStr | None = None
+    password: str | None = None
+
+    @field_validator("password")
+    def validate_password(cls, value):
+        if len(value) < 8:
+            raise ValueError("Password must be at least 8 characters long.")
+        if len(value) > 32:
+            raise ValueError("Password must not exceed 32 characters.")
+        if not any(char.isdigit() for char in value):
+            raise ValueError("Password must contain at least one digit.")
+        if not any(char.isalpha() for char in value):
+            raise ValueError("Password must contain at least one letter.")
+        return value
+
 class BaseAuthor(BaseModel):
     name: str
 
-class AuthorSchema(BaseAuthor):
+class CreateAuthor(BaseAuthor):
     biography: str
     date_of_birth: datetime.date
+
+class AuthorSchema(CreateAuthor):
+    id: int
 
 class UpdateAuthor(BaseModel):
     name: str | None = None
